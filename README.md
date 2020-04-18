@@ -10,6 +10,9 @@ Use your "Up" "Right" "Down" "Left" Buttons to move the Snake. Your goal is to E
 
 # Buttons
 "Up"-Arrow: GO UP, 
+
 "Right"-Arrow: GO RIGHT, 
+
 "Down"-Arrow: GO DOWN, 
+
 "Left"-Arrow: GO LEFT
