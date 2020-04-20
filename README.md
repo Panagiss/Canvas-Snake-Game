@@ -20,3 +20,6 @@ A 608x608p Canvas frame with a Snake trying to eat as much fruits as it can. Use
 
 # Setup
 Download or clone the Master Branch and all you have to is open index.html with your preferred browser
+
+# Cookie Support
+Added Cookie storage, in order to store you personal Best Score each time. Take in mind that Cookies are not Supported in Google Chrome Browser(for local files such as the Snake Game), so for the full experience use another Browser such Mozilla,Edge,Opera etc.

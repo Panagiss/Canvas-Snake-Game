@@ -6,6 +6,7 @@ const box = 32;
 
 //create score
 let score=0; 
+let bestScore;
 
 //load images
 const backroundImg = new Image();
@@ -67,6 +68,24 @@ document.addEventListener("keydown",function(event){
     }
 });
 
+
+function saveCookie(newBest){
+	var cookieString="";
+	expireDate = new Date();
+ 	expireDate.setMonth(expireDate.getMonth() + 12);
+	document.cookie = "Score=" +newBest+ ";expires="+ expireDate.toGMTString() + ";";
+}
+
+function loadCookie(){
+	var cookie=[];
+	var loadedCookies=document.cookie.split(";");
+	cookie = loadedCookies[0].split("=");
+	if(typeof cookie[1] === 'undefined'){
+		return null;
+	}
+	return cookie[1].trim();
+}
+
 function collision(head,array){
 	for (var i =0; i < array.length; i++) {
 		if(head.x==array[i].x && head.y==array[i].y){
@@ -75,6 +94,17 @@ function collision(head,array){
 	}
 	return false;
 }
+
+
+//check for cookies
+var cookie=loadCookie();
+console.log(cookie);
+if(cookie !== null && cookie !== ""){
+	bestScore=parseInt(cookie);
+}else{
+	bestScore=0;
+}
+
 
 //draw functiom
 function draw(){
@@ -105,8 +135,15 @@ function draw(){
 	if(snake.headX<box || snake.headX>17*box || snake.headY<3*box ||snake.headY >17*box || collision(snake.newHead,snake.bodySnake)){
 		clearInterval(game);
 		dead.play();
-		if(!window.alert("Game Over\nScore:"+score)){
-			location.reload(true);
+		if(score>bestScore){
+			if(!window.alert("Game Over\nNew Best Score:"+score)){
+				saveCookie(score);
+				location.reload(true);
+			}
+		}else{
+			if(!window.alert("Game Over\nScore:"+score)){
+				location.reload(true);
+			}
 		}
 	}
 
@@ -116,6 +153,11 @@ function draw(){
 	ctx.fillStyle="White";
 	ctx.font="45px Changa one";
 	ctx.fillText(score,2*box,1.6*box);
+	if(bestScore<score){
+		ctx.fillStyle="White";
+		ctx.font="45px Changa one";
+		ctx.fillText("New Best: "+score,10*box,1.6*box);
+	}
 }
 
 //call draw function every 100 ms
