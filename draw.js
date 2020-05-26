@@ -70,7 +70,7 @@ document.addEventListener("touchstart",function(event){
 	console.log(event.touches[0],event.type); //debug
 	startX=event.touches[0].clientX;
 	startY=event.touches[0].clientY;
-} );
+});
 
 document.addEventListener("touchmove",function(event){
 	console.log(event.touches[0],event.type); //debug
@@ -127,7 +127,7 @@ function handleSwipe(){
     startX = null;
     startY = null;                    
 	
-	/*
+	/* another way to calculate swipe events
 	//console.log(startX,endX,startY,endY); //debug
 	if(endX-startX > 0 && Math.abs(endY-startY)<=100 ){ //right swipe
 		console.log("right");
@@ -159,7 +159,6 @@ function handleSwipe(){
 
 
 function saveCookie(newBest){
-	var cookieString="";
 	expireDate = new Date();
  	expireDate.setMonth(expireDate.getMonth() + 12);
 	document.cookie = "Score=" +newBest+ ";expires="+ expireDate.toGMTString() + ";";
@@ -250,7 +249,10 @@ function draw(){
 }
 
 var a=true;
-document.getElementById("soundButton").addEventListener("click",function(){
+document.getElementById("soundButton").addEventListener("click",toggleSound);
+//document.getElementById("soundButton").addEventListener("touchstart",toggleSound);
+
+function toggleSound(){
 	if(a){
 		document.getElementById("soundButton").textContent="Turn OFF FX Sounds";
 		dead.muted=false;
@@ -270,7 +272,7 @@ document.getElementById("soundButton").addEventListener("click",function(){
 		left.muted=true;
 		a=true;
 	}
-});
+}
 
 
 //call draw function every 100 ms
