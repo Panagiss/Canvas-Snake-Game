@@ -37,7 +37,7 @@ function Snake(){
 
             case 'down':
 	    		this.headY+=box;
-	           	down.play();
+				down.play();
             	break; 
         }
         let tmp = direction;
