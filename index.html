@@ -7,11 +7,21 @@
                 margin: 0 auto;
             }
         </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <audio id="eat" src="audio/eat.mp3" muted=true></audio>
+        <audio id="dead" src="audio/dead.mp3" muted=true></audio>
+        <audio id="up" src="audio/up.mp3" muted=true></audio>
+        <audio id="right" src="audio/right.mp3" muted=true></audio>
+        <audio id="down" src="audio/down.mp3" muted=true></audio>
+        <audio id="left" src="audio/left.mp3" muted=true></audio>
     </head>
-    
-    <canvas id="snake" width="608" height="608"></canvas>
-    <script src="fruit.js"></script>
-    <script src="snake.js"></script>
-    <script src="draw.js"></script>
+    <body>
+        <button id="soundButton" class="sBtn">Turn ON FX Sounds</button>
+        <canvas id="snake" width="608" height="608"></canvas>
+        <script src="fruit.js"></script>
+        <script src="snake.js"></script>
+        <script src="draw.js"></script>
+    </body>
+
     
 </html>

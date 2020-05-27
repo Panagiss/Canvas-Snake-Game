@@ -1,0 +1,29 @@
+{
+  "name": "canvas-snake-game",
+  "version": "1.0.0",
+  "description": "Simple canvas snake game with javascript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Panagiss/Canvas-Snake-Game.git"
+  },
+  "keywords": [
+    "snake-game",
+    "javascript",
+    "canvas",
+    "html5"
+  ],
+  "author": "Panagis Sarantos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Panagiss/Canvas-Snake-Game"
+  },
+  "homepage": "https://github.com/Panagiss/Canvas-Snake-Game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

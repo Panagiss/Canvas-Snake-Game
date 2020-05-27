@@ -15,18 +15,13 @@ const foodImg = new Image();
 foodImg.src = "img/food.png";
 
 //load audio files
-const dead= new Audio();
-const eat= new Audio();
-const up= new Audio();
-const down= new Audio();
-const left= new Audio();
-const right= new Audio();
-dead.src = "audio/dead.mp3";
-eat.src = "audio/eat.mp3";
-up.src = "audio/up.mp3";
-left.src = "audio/left.mp3";
-down.src = "audio/down.mp3";
-right.src = "audio/right.mp3";
+const dead= document.getElementById("dead");
+const eat= document.getElementById("eat");
+const up= document.getElementById("up");
+const down= document.getElementById("down");
+const left= document.getElementById("left");
+const right= document.getElementById("right");
+
 
 //create snake obj
 var snake = new Snake();
@@ -35,33 +30,34 @@ var snake = new Snake();
 var food = new Food();
 
 //control snake
-var d=0;
+var direction_key=0,startX=null,startY=null,endX=null,endY=null;
+
 document.addEventListener("keydown",function(event){
     switch(event.keyCode){
         case 37:
-        	if(d!=39){
-        		d=37;
-        		snake.changeDirection('left');
+        	if(direction_key!=39){
+        		direction_key=37;
+				snake.changeDirection('left');
         	}
             break;
 
         case 38:
-        	if(d!=40){
-        		d=38;
+        	if(direction_key!=40){
+        		direction_key=38;
         		snake.changeDirection('up');
         	}
             break;
             
         case 39:
-        	if(d!=37){
-        		d=39;
+        	if(direction_key!=37){
+        		direction_key=39;
         		snake.changeDirection('right');
         	}
             break;
 
         case 40:
-        	if(d!=38){
-        		d=40;
+        	if(direction_key!=38){
+        		direction_key=40;
   				snake.changeDirection('down');        	
   			}
             break;
@@ -69,8 +65,100 @@ document.addEventListener("keydown",function(event){
 });
 
 
+document.addEventListener("touchstart",function(event){
+	//event.preventDefault();
+	console.log(event.touches[0],event.type); //debug
+	startX=event.touches[0].clientX;
+	startY=event.touches[0].clientY;
+});
+
+document.addEventListener("touchmove",function(event){
+	console.log(event.touches[0],event.type); //debug
+	endX=event.touches[0].clientX;
+	endY=event.touches[0].clientY;
+	handleSwipe();
+} );
+
+/*document.addEventListener("touchend",function(event){
+	event.preventDefault();
+	console.log(event.touches[0],event.type); //debug
+	endX=event.changedTouches[0].screenX;
+	endY=event.changedTouches[0].screenY;
+	//handleSwipe(startX,startY,endX,endY);
+},{passive:false} ); */
+
+function handleSwipe(){
+	if ( ! startX || ! startY ) {
+        return;
+	}
+	var xDiff = startX - endX;
+    var yDiff = startY - endY;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) { //most significant
+        if ( xDiff > 0 ) {
+			console.log("left");
+			if(direction_key!=39){
+				direction_key=37;
+				snake.changeDirection('left');
+			}
+        } else {
+			console.log("right");
+			if(direction_key!=37){
+				direction_key=39;
+				snake.changeDirection('right');
+			}
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+			console.log("up");
+			if(direction_key!=40){
+				direction_key=38;
+				snake.changeDirection('up');
+			}
+        } else { 
+			console.log("down");
+			if(direction_key!=38){
+				direction_key=40;
+				snake.changeDirection('down');        	
+			}
+        }                                                                 
+    }
+    // reset values
+    startX = null;
+    startY = null;                    
+	
+	/* another way to calculate swipe events
+	//console.log(startX,endX,startY,endY); //debug
+	if(endX-startX > 0 && Math.abs(endY-startY)<=100 ){ //right swipe
+		console.log("right");
+		if(direction_key!=37){
+			direction_key=39;
+			snake.changeDirection('right');
+		}
+	}else if(endX-startX < 0 && Math.abs(endY-startY)<=100 ){ //left swipe
+		console.log("left");
+		if(direction_key!=39){
+			direction_key=37;
+			snake.changeDirection('left');
+		}
+	}else if(endY-startY > 0 && Math.abs(endX-startX)<=100 ){ //down swipe
+		console.log("down");
+		if(direction_key!=38){
+			direction_key=40;
+			snake.changeDirection('down');        	
+		  }
+	}else if(endY-startY < 0 && Math.abs(endX-startX)<=100 ){ //up swipe
+		console.log("up");
+		if(direction_key!=40){
+			direction_key=38;
+			snake.changeDirection('up');
+		}
+	}*/
+
+} 
+
+
 function saveCookie(newBest){
-	var cookieString="";
 	expireDate = new Date();
  	expireDate.setMonth(expireDate.getMonth() + 12);
 	document.cookie = "Score=" +newBest+ ";expires="+ expireDate.toGMTString() + ";";
@@ -118,7 +206,7 @@ function draw(){
 	snake.headY=snake.bodySnake[0].y;
 
 	//which direction
-	snake.updateDirection(d);
+	snake.updateDirection(direction_key);
 	
 
 	//if snake eats food
@@ -159,6 +247,33 @@ function draw(){
 		ctx.fillText("New Best: "+score,10*box,1.6*box);
 	}
 }
+
+var a=true;
+document.getElementById("soundButton").addEventListener("click",toggleSound);
+//document.getElementById("soundButton").addEventListener("touchstart",toggleSound);
+
+function toggleSound(){
+	if(a){
+		document.getElementById("soundButton").textContent="Turn OFF FX Sounds";
+		dead.muted=false;
+		eat.muted=false;
+		up.muted=false;
+		right.muted=false;
+		down.muted=false;
+		left.muted=false;
+		a=false;
+	}else{
+		document.getElementById("soundButton").textContent="Turn ON FX Sounds";
+		dead.muted=true;
+		eat.muted=true;
+		up.muted=true;
+		right.muted=true;
+		down.muted=true;
+		left.muted=true;
+		a=true;
+	}
+}
+
 
 //call draw function every 100 ms
 let game=setInterval(draw,150);

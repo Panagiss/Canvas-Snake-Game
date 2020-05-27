@@ -1,0 +1,17 @@
+html { 
+    background: url(img/bg.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    touch-action: none; /* prevent scrolling */
+}
+.sBtn{
+    color: chocolate;
+    font-size: large;
+    padding: 20px;
+    margin: 10px;
+}
+body {
+    overscroll-behavior: none;
+  }
